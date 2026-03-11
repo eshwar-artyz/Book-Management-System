@@ -1,6 +1,7 @@
 package jsp.springboot.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import jsp.springboot.dao.BookDao;
 import jsp.springboot.dto.ResponseStructure;
 import jsp.springboot.entity.Book;
+import jsp.springboot.exception.NoRecordAvailableException;
 
 @Service
 public class BookService {
@@ -36,6 +38,21 @@ public class BookService {
         structure.setData(bookDao.saveAllBooks(books));
 
         return new ResponseEntity<>(structure, HttpStatus.CREATED);
+	}
+	
+	public ResponseEntity<ResponseStructure<Book>> getBookById(int id) {
+		
+		Optional<Book> opt = bookDao.getBookById(id);
+		ResponseStructure<Book> response = new ResponseStructure<Book>();
+		if(opt.isPresent()) {
+			response.setStatusCode(HttpStatus.FOUND.value());
+			response.setMessage("Book found successfully");
+			response.setData(opt.get());
+			
+			return new ResponseEntity<ResponseStructure<Book>>(response, HttpStatus.FOUND);
+		}
+		else 
+			throw new NoRecordAvailableException("There is no book in the given id");
 	}
 	
 }

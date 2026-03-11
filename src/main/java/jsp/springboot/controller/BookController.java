@@ -39,16 +39,7 @@ public class BookController {
     
     @GetMapping("/{id}")
     public ResponseEntity<ResponseStructure<Book>> getBookById(@PathVariable Integer id) {
-    	Optional<Book> opt = bookRepository.findById(id);
-    	if(!opt.isEmpty()) {
-    		ResponseStructure<Book> structure = new ResponseStructure<Book>();
-    		structure.setStatusCode(HttpStatus.FOUND.value());
-    		structure.setMessage("Book found successfully");
-    		structure.setData(opt.get());
-    		return new ResponseEntity<ResponseStructure<Book>>(structure,HttpStatus.FOUND);
-    	}
-    	else 
-    		throw new IdNotFoundException("No such id exists");
+    	return bookservice.getBookById(id);
     }
 
     // fetch all records from db
