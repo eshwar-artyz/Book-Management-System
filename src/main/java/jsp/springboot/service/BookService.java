@@ -59,6 +59,21 @@ public class BookService {
 			throw new NoRecordAvailableException("There is no book in the given id");
 	}
 	
+	public ResponseEntity<ResponseStructure<List<Book>>> getAllBooks() {
+        List<Book> books = bookDao.getAllBooks();
+        ResponseStructure<List<Book>> structure = new ResponseStructure<>();
+        if (books.isEmpty()) {
+        	throw new IdNotFoundException("No such id exists");
+        }
+        structure.setStatusCode(HttpStatus.OK.value());
+        structure.setMessage("Books fetched successfully");
+        structure.setData(books);
+
+        return new ResponseEntity<>(structure, HttpStatus.OK);
+    }
+	
+	
+	
     public ResponseEntity<ResponseStructure<Book>> updateBookById(Integer id,Book book) {
 
         Optional<Book> optionalBook = bookDao.getBookById(id);

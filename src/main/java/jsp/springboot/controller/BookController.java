@@ -45,16 +45,7 @@ public class BookController {
     // fetch all records from db
     @GetMapping
     public ResponseEntity<ResponseStructure<List<Book>>> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        ResponseStructure<List<Book>> structure = new ResponseStructure<>();
-        if (books.isEmpty()) {
-        	throw new IdNotFoundException("No such id exists");
-        }
-        structure.setStatusCode(HttpStatus.OK.value());
-        structure.setMessage("Books fetched successfully");
-        structure.setData(books);
-
-        return new ResponseEntity<>(structure, HttpStatus.OK);
+        return bookservice.getAllBooks();
     }
 
     // update record in db

@@ -26,6 +26,11 @@ public class BookDao {
 	public Optional<Book> getBookById(Integer id) {
 		return bookRepository.findById(id);
 	}
+	
+	public List<Book> getAllBooks() {
+		return bookRepository.findAll();
+	}
+	
 	public Book updateBookById(Integer id,Book book) {
 		return bookRepository.save(book);
 	}
