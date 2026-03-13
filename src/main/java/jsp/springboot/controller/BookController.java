@@ -62,27 +62,8 @@ public class BookController {
     public ResponseEntity<ResponseStructure<Book>> updateBookById(
             @PathVariable Integer id,
             @RequestBody Book book) {
-
-        Optional<Book> optionalBook = bookRepository.findById(id);
-        ResponseStructure<Book> structure = new ResponseStructure<>();
-
-        if (!optionalBook.isEmpty()) {
-            book.setId(id);
-            Book updatedBook = bookRepository.save(book);
-            structure.setStatusCode(HttpStatus.ACCEPTED.value());
-            structure.setMessage("Book updated successfully");
-            structure.setData(updatedBook);
-
-            return new ResponseEntity<>(structure, HttpStatus.ACCEPTED);
-        }
-
-        else if(book == null) {
-        	throw new NoRecordAvailableException("No such records exists");
-        }
-        
-        else {
-        	throw new IdNotFoundException("No such id exists");
-        }
+    		
+    	return bookservice.updateBookById(id, book);
 
     }
 
