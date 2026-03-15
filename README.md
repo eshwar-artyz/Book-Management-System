@@ -1,4 +1,4 @@
-# 📚 Book Management System
+# 📚 Book Management System - BMS
 
 A production-ready **RESTful API** built with **Spring Boot 3** and **Java 17** for managing a book catalogue. Supports full CRUD operations, server-side pagination, multi-field sorting, and flexible search across all book properties.
 
